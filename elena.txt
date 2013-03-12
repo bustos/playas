@@ -1,0 +1,3 @@
+ALTER TABLE city  ADD INDEX   (POPULATION)
+alter table cds add id int(10);
+alter table cds add id int(10);

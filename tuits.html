@@ -2,45 +2,24 @@
 
 <html lang="es-ES">
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
-    <meta name="description" content="Directorios de empresas, listado de negocios, ofertas y mucho más en TicTacTuit.com">
-    <meta name="author" content="tictactuic.com">
+<input type="button" name="PHP" value="PHP" class="input" onClick="javascript:window.open('leertuits.php?clave=depo');">
 
-    <title>Directorio de negocios y ofertas | tictactuit</title>
-	
+<script>
 
-    <!-- jQuery -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+                  
+                    success: function(f, a) { //f is the form, a.result is the JSON our PHP sent
+                        f.setValues(a.result.data);    
+                        Ext.Msg.alert('Success','Quote #'+a.result.id+' added');
+                    },             
+                    failure: function(f, a) {  
+                        f.markInvalid(a.result.errors); 
+                    }             
+                
+</script>
       
-	        
-
-         
-</head>
-
-<body>
-    <!-- CABECERA -->
-    <div id="cabecera">
-	  $.ajax({ 
-                type: "POST", 
-                   url: "tuitter.php", 
-                   data: "Metodo=test", 
-                cache: true, 
-                   success: function(html){ 
-                        alert(html) 
-                } 
-        });
-	
-	nombres=
-	do{
-		<p>Desarrollo página Web  Gestor de Contenidos</p>
-	} while(
-	
 
 
-        </div>
-    </div>
+
 
 
 
@@ -51,6 +30,5 @@
 
     
 
-</body>
 
 </html>

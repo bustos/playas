@@ -12,9 +12,14 @@ class tuit
 	private $url   	= array() ; 
 	private $idtwitter = array() ; 
 	private $fecha = array() ; 	
-    function carga($nuevoTexto) 
+    private $empresa = array() ; 	
+	function carga($nuevoidtw,$nuevoTexto,$nuevourl,$nuevofecha,$nuevoempresa) 
     { 
         array_push($this->texto , $nuevoTexto); 
+		array_push($this->url , $nuevourl); 
+		array_push($this->idtwitter , $nuevoidtw); 
+		array_push($this->fecha , $nuevofecha); 
+		array_push($this->empresa , $nuevoempresa); 
     } 
     function getTextos() 
     { 
@@ -33,21 +38,23 @@ $tuit = new tuit();
 	if (mysqli_connect_errno())  {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
-	$tmp="SELECT idtwitter FROM empresas where categoria like '%".$clave."%' or subcategoria like '%".$clave."%'";
+	$tmp="SELECT idtwitter,nombre FROM empresas where categoria like '%".$clave."%' or subcategoria like '%".$clave."%'";
 	$result = mysqli_query($con,$tmp);
 	while($row = mysqli_fetch_array($result)){
-		$tmptuits="SELECT idtwitter FROM empresas where categoria like '%".$clave."%' or subcategoria like '%".$clave."%'";
+		$tmptuits="SELECT idtwitter,tuit,urlimagen,fecha FROM tuits where idtwitter like '%".$row['idtwitter']."%'";
+	//	var_dump($tmptuits);
 		$resultuits = mysqli_query($con,$tmptuits);
+		var_dump($resultuits);
 		while($rowtuits = mysqli_fetch_array($resultuits)){
-			echo $rowtuits['tuit'] . 
-			echo "<br />";
-			$tuit->carga($row['tuit']);
+			
+			//function carga($nuevoidtw,$nuevoTexto,$nuevourl,$nuevofecha) 
+			$tuit->carga($rowtuits['idtwitter'],$rowtuits['tuit'],$rowtuits['urlimagen'],$rowtuits['fecha'],$row['nombre']);
 		}
 
 	}
 
 	echo json_encode($tuit);	
-	var_dump($tuit);
+
 	
 mysqli_close($con);
 
