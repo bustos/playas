@@ -29,11 +29,7 @@ $code=$_GET["code"];
 		
 	}
 	echo "</select><br>";
-	//echo $ciudad2;
-	echo $row['Code'];
 	
-
-
 ?>
      
  
