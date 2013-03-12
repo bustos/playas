@@ -1,0 +1,4 @@
+INSERT INTO tuits('idtwitter', 'tuit', 'fecha', 'valor',
+ 'urlimagen', 'idstr') VALUES ('TicTacTuit',
+ '@EstudiosSiris Hemos viscon nosotros!',
+'07-03-2013','0','pmal.jpeg','309716793906323457')
