@@ -1,7 +1,7 @@
 <html>
 <body>
 
-<form action="exito.php" method="post">
+<form action="insert.php" method="post">
 <?php
 $code=$_POST["code"];
 
@@ -18,11 +18,12 @@ $code=$_POST["code"];
 	
 	while($rowciudad = mysqli_fetch_array($resultc)){
 		$ciudad=$rowciudad['CountryCode'];
-		echo "Ciudad: <input type='text' name=' Ciudad' value=".$rowciudad['Name']."><br>";
-		echo "Distrito: <input type='text' name=' Ciudad' value=".$rowciudad['District']."><br>";
-		echo "Poblacion: <input type='text' name=' Ciudad' value=".$rowciudad['Population']."><br>";
-	}
 	
+	echo "Ciudad: <input type='text' name='ciudad' value=".$rowciudad['Name']."><br>";
+		echo "Distrito: <input type='text' name='distrito' value=".$rowciudad['District']."><br>";
+		echo "Poblacion: <input type='text' name='poblacion' value=".$rowciudad['Population']."><br>";
+		echo "codigo pais: <input type='text' name='code' value=".$ciudad."><br>";
+	}
 	echo "Paises: <select name='menu1'>";
 	while($row = mysqli_fetch_array($resultp)){
 		$ciudad2=$row['Code'];
@@ -34,11 +35,12 @@ $code=$_POST["code"];
 
 	echo "<INPUT TYPE='button' value='submit' onClick=\"parent.location='exito.php?code=".$code."'\">";	
 	echo "<INPUT TYPE='button' value='borra' onClick=\"parent.location='borra.php?code=".$code."'\">";
+	
 
 
 	
 ?>
-     
+<INPUT TYPE='submit' value='Insertar'>
  
 
 

@@ -11,6 +11,7 @@ echo "<form action='ciudades.php' method='post'>";
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
 	$resultc = mysqli_query($con,$tmp);
+	
 	echo "<br>Borrado<br>";
 ?>
 <INPUT type="text" name="code"><BR>     
