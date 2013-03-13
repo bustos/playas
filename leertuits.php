@@ -8,7 +8,7 @@
 
 class tuit
 { 
-    private $texto 	= array() ; 
+    public $texto 	= array() ; 
 	private $url   	= array() ; 
 	private $idtwitter = array() ; 
 	private $fecha = array() ; 	
@@ -21,6 +21,9 @@ class tuit
 		array_push($this->fecha , $nuevofecha); 
 		array_push($this->empresa , $nuevoempresa); 
     } 
+	function largo() {
+		return(sizeof($text));
+	}
     function getTextos() 
     { 
         return $this->textos; 
@@ -29,7 +32,7 @@ class tuit
 } 
  
 $clave=$_GET["clave"];
-if (strlen($clave)>2) tuit_hastag($clave);
+if (strlen($clave)>1) tuit_hastag($clave);
 
 function tuit_hastag($clave)
 {
@@ -44,7 +47,6 @@ $tuit = new tuit();
 		$tmptuits="SELECT idtwitter,tuit,urlimagen,fecha FROM tuits where idtwitter like '%".$row['idtwitter']."%'";
 	//	var_dump($tmptuits);
 		$resultuits = mysqli_query($con,$tmptuits);
-		var_dump($resultuits);
 		while($rowtuits = mysqli_fetch_array($resultuits)){
 			
 			//function carga($nuevoidtw,$nuevoTexto,$nuevourl,$nuevofecha) 
@@ -54,7 +56,9 @@ $tuit = new tuit();
 	}
 
 	echo json_encode($tuit);	
-
+	for($i=0;$i<$tuit->largo();$i++){
+		echo $tuit->texto[$i] ."<br>";
+	}
 	
 mysqli_close($con);
 

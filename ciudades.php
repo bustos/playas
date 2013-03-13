@@ -1,10 +1,12 @@
 <html>
 <body>
 
-<form action="paises.php" method="post">
+<form action="exito.php" method="post">
 <?php
-$code=$_GET["code"];
+$code=$_POST["code"];
 
+
+//$code=$_POST["code"];
 	$con=mysqli_connect("localhost","root","123","world");
 	if (mysqli_connect_errno())  {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -29,11 +31,20 @@ $code=$_GET["code"];
 		
 	}
 	echo "</select><br>";
+
+	echo "<INPUT TYPE='button' value='submit' onClick=\"parent.location='exito.php?code=".$code."'\">";	
+	echo "<INPUT TYPE='button' value='borra' onClick=\"parent.location='borra.php?code=".$code."'\">";
+
+
 	
 ?>
      
  
-<input type="submit"><br/><br/>
+
+
+
+
+
 </form>
 
 </body>
