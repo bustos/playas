@@ -6,6 +6,7 @@
  <body>
  
 <?php
+require("menu.php");
 $mysqli = new mysqli("localhost", "root", "123", "world");
 
 /* check connection */

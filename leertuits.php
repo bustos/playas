@@ -4,25 +4,27 @@
   <title>PHP</title>
  </head>
  <body>
+
  <?php 
 
 class tuit
 { 
+	public $empresa = array() ; 	
     public $texto 	= array() ; 
-	private $url   	= array() ; 
-	private $idtwitter = array() ; 
-	private $fecha = array() ; 	
-    private $empresa = array() ; 	
+	public $url   	= array() ; 
+	public $idtwitter = array() ; 
+	public $fecha = array() ; 	
+    
 	function carga($nuevoidtw,$nuevoTexto,$nuevourl,$nuevofecha,$nuevoempresa) 
     { 
-        array_push($this->texto , $nuevoTexto); 
+        array_push($this->empresa , $nuevoempresa); 
+		array_push($this->texto , $nuevoTexto); 
 		array_push($this->url , $nuevourl); 
 		array_push($this->idtwitter , $nuevoidtw); 
 		array_push($this->fecha , $nuevofecha); 
-		array_push($this->empresa , $nuevoempresa); 
     } 
 	function largo() {
-		return(sizeof($text));
+		return(sizeof($this->texto));
 	}
     function getTextos() 
     { 
@@ -43,24 +45,22 @@ $tuit = new tuit();
 	}
 	$tmp="SELECT idtwitter,nombre FROM empresas where categoria like '%".$clave."%' or subcategoria like '%".$clave."%'";
 	$result = mysqli_query($con,$tmp);
+	
 	while($row = mysqli_fetch_array($result)){
+		$nombre=$row['nombre'];
+	
 		$tmptuits="SELECT idtwitter,tuit,urlimagen,fecha FROM tuits where idtwitter like '%".$row['idtwitter']."%'";
-	//	var_dump($tmptuits);
+		
 		$resultuits = mysqli_query($con,$tmptuits);
 		while($rowtuits = mysqli_fetch_array($resultuits)){
-			
-			//function carga($nuevoidtw,$nuevoTexto,$nuevourl,$nuevofecha) 
-			$tuit->carga($rowtuits['idtwitter'],$rowtuits['tuit'],$rowtuits['urlimagen'],$rowtuits['fecha'],$row['nombre']);
+			$tuit->carga($rowtuits['idtwitter'],$rowtuits['tuit'],$rowtuits['urlimagen'],$rowtuits['fecha'],$nombre);
 		}
 
 	}
-
-	echo json_encode($tuit);	
-	for($i=0;$i<$tuit->largo();$i++){
-		echo $tuit->texto[$i] ."<br>";
-	}
 	
-mysqli_close($con);
+	//var_dump($tuit);
+	echo json_encode($tuit);	
+	mysqli_close($con);
 
 }
 
@@ -86,6 +86,12 @@ mysqli_close($con);
 
 
  ?> 
+ <form action="tuits.html" method="post" accept-charset="utf-8">
+        
+	<p><input type="submit" value="Continue &rarr;"></p>
+</form>
 
+ 
+</form>
 </BODY>
 </HTML>

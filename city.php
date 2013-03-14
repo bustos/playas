@@ -7,9 +7,10 @@
  
 <?php
 require("conection_info.php");
+
 $fra=$_GET["code"];
 $tmp="SELECT * from city where name LIKE '%$fra%'";
-echo htmlspecialchars($_COOKIE["Cj"]) ;
+
 if ($result = $mysqli->query($tmp))
 {
 		echo "<a name='top'>ciudades</a>"; 

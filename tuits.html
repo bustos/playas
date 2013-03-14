@@ -2,20 +2,24 @@
 
 <html lang="es-ES">
 
-<input type="button" name="PHP" value="PHP" class="input" onClick="javascript:window.open('leertuits.php?clave=depo');">
+ <script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script>
-
-                  
-                    success: function(f, a) { //f is the form, a.result is the JSON our PHP sent
-                        f.setValues(a.result.data);    
-                        Ext.Msg.alert('Success','Quote #'+a.result.id+' added');
-                    },             
-                    failure: function(f, a) {  
-                        f.markInvalid(a.result.errors); 
-                    }             
+$.get( "leertuits.php",
+    "clave=depor",
+    function(data) { 
+		
+		for(i=0;i<1;i++)
+		{
+			alert (data);
+					
+		}
+	},
+    "json");
+	
                 
 </script>
+</html>
       
 
 
