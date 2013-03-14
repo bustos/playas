@@ -7,7 +7,7 @@
  
 <?php
 require("conection_info.php");
-$fra=$_GET["code"];
+$fra=$_GET["code"]; //dfhg
 $tmp="SELECT * from country order by name";// where Name LIKE '%$fra%'";
 
 if ($result = $mysqli->query($tmp))

@@ -21,11 +21,13 @@ if ($result = $mysqli->query($tmp))
 		while ($row = $result->fetch_array()){
 			echo "<tr>"; 	
 			$name=$row["Name"];
+			$id=$row["ID"];
 			echo "<td><a name='$name'>"; 		  
-			echo "<a href='city.php?code=$name'>$name</a></td>"; 		  
+			echo "<a href='ciudades.php?code=$id'>$name</a></td>"; 		  
 			for($i=2;$i<5;$i++){   
 			   echo "<td>".$row[$i]."</td>"; 		   
 			}
+			echo "<a href='ciudades.php?code=$id'>Wikipedia</a></td>"; 		  
 		echo "</tr>"; 
 
 	}
@@ -33,7 +35,6 @@ if ($result = $mysqli->query($tmp))
 }
 echo "</table>"; 
 echo "<a name='buttom'></a>"; 
-echo "<a href='http://www.bustos.cixx6.com'>carlos</a>";
 echo "<a href='#top'>top</a>";
     /* free result set */
 

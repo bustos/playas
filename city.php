@@ -20,7 +20,7 @@ if ($result = $mysqli->query($tmp))
 		echo " <td>CODE</td><td>NAME</td>"; 		   
 		while ($row = $result->fetch_assoc()){
 			echo "<tr>"; 	
-			$name=$row["CountryCode"];
+			$name=$row["ID"];
 			echo "<td><a href='country.php?code=$name'>Pais</a></td>"; 		  
 			foreach(($row) as $key => $line){   
 			   echo "<td>", $line,"</td>"; 		   
@@ -32,7 +32,7 @@ if ($result = $mysqli->query($tmp))
 }
 echo "</table>"; 
 echo "<a name='buttom'></a>"; 
-echo "<a href='http://www.bustos.cixx6.com'>carlos</a>";
+
 echo "<a href='#top'>top</a>";
     /* free result set */
 

@@ -3,7 +3,8 @@
 
 <form action="insert.php" method="post">
 <?php
-$code=$_POST["code"];
+require("conection_info.php");
+$code=$_GET["code"];
 
 
 //$code=$_POST["code"];
