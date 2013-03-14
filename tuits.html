@@ -6,17 +6,21 @@
 
 <script>
 $.get( "leertuits.php",
-    "clave=depor",
+    "clave=tenis",
     function(data) { 
+		obj = jQuery.parseJSON(data);
 		
-		for(i=0;i<1;i++)
-		{
-			alert (data);
-					
+		for(i=0;i<obj.empresa.length;i++)	{
+			document.write(obj.empresa[i]);		
+			document.write(obj.url[i]);		
+			document.write(obj.idtwitter[i]);		
+			document.write(obj.fecha[i]);	
+			document.write("<br>");					
+			document.write(obj.texto[i]);		
+			document.write("<br><br>");					
 		}
-	},
-    "json");
-	
+	});
+	//alert("fin");
                 
 </script>
 </html>

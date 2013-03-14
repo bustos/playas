@@ -27,7 +27,7 @@ if ($result = $mysqli->query($tmp))
 			for($i=2;$i<5;$i++){   
 			   echo "<td>".$row[$i]."</td>"; 		   
 			}
-			echo "<a href='ciudades.php?code=$id'>Wikipedia</a></td>"; 		  
+			echo "<td><a href='http://en.wikipedia.org/wiki/$name'>Wikipedia</a></td>"; 		  
 		echo "</tr>"; 
 
 	}

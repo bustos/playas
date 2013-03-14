@@ -1,10 +1,3 @@
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
- <head>
-  <title>PHP</title>
- </head>
- <body>
-
  <?php 
 
 class tuit
@@ -85,13 +78,4 @@ $tuit = new tuit();
  }
 
 
- ?> 
- <form action="tuits.html" method="post" accept-charset="utf-8">
-        
-	<p><input type="submit" value="Continue &rarr;"></p>
-</form>
-
- 
-</form>
-</BODY>
-</HTML>
+ ?>
