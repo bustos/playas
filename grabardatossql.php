@@ -6,10 +6,34 @@
  <body>
  <?php 
 
- 
 require("twitteroauth.php");
+$nombre_fichero = 'semaforo.txt';
+/*
+if (file_exists($nombre_fichero)) {
+    echo "El fichero $nombre_fichero existe";
+	//exit();
+} else {
+    echo "El fichero $nombre_fichero no existe";
+}
+*/
+
+$myFile = "semaforo.txt";
+$fh = fopen($myFile, 'w') or die("can't open file");
+$stringData = "semaforo\n";
+fwrite($fh, $stringData);
+fclose($fh);
 set_time_limit(0); 
 session_start();
+
+function cierre(){
+    // Esta es nuestra función de cierre,
+    // aquí podemos hacer las últimas operaciones
+    // antes de que el script sea completado.
+	echo "borrando semaforo";
+	unlink("semaforo.txt");
+}
+
+register_shutdown_function('cierre');
 
 function getConnectionWithAccessToken($oauth_token, $oauth_token_secret) {
   set_time_limit(0); 
@@ -21,13 +45,13 @@ $connection = getConnectionWithAccessToken('1175525606-VqNgXi3qptL6wjt33Ewmy2LKJ
 $con=mysqli_connect("localhost","root","123","twitter");
 
 	$tcadena="https://api.twitter.com/1.1/application/rate_limit_status.json?resources=help,users,search,statuses";
-	
+	echo "Concectando a twitter";
 	$tcontent = $connection->get($tcadena);
-	var_dump($tcontent);
+	var_dump($tcontent->resources);
 
-/*do{
-	leegraba($con,$connection);
-}while(true);*/
+//do{
+	//leegraba($con,$connection);
+//}while(true);
 mysqli_close($con);
 
 
@@ -41,7 +65,7 @@ $result = mysqli_query($con,"SELECT * FROM empresas");
 
 	while($row = mysqli_fetch_array($result)){
 		$nombre=$row['idtwitter'];
-		echo $nombre. "<br>";
+		echo "<br>".$nombre. "<br>";
 		$cadena="statuses/user_timeline.json?include_entities=true&include_rts=false&screen_name=@".$nombre."&count=2300";
 		$content = $connection->get($cadena);
 		for($i=0;$i<count($content);$i++) {  
@@ -56,6 +80,7 @@ $result = mysqli_query($con,"SELECT * FROM empresas");
 			$separa="','";
 			$tmp=$tmp0.$tmp1 .$separa .$tmp5.$separa. $tmp2 .$separa. $tfecha.$separa. $tmp4 . $final;
 			$result2=mysqli_query($con,$tmp);
+	
 		}
 		sleep(40);
 

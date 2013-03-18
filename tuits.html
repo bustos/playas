@@ -8,6 +8,7 @@
 $.get( "leertuits.php",
     "clave=de",
     function(data) { 
+		alert(data);
 		obj = jQuery.parseJSON(data);
 		document.write(obj.empresa.length);
 		for(i=0;i<obj.empresa.length;i++)	{
