@@ -8,10 +8,10 @@
 
 require("twitteroauth.php");
 $nombre_fichero = 'semaforo.txt';
-/*
+
 if (file_exists($nombre_fichero)) {
     echo "El fichero $nombre_fichero existe";
-	//exit();
+	exit();
 } else {
     echo "El fichero $nombre_fichero no existe";
 }
@@ -22,9 +22,9 @@ $fh = fopen($myFile, 'w') or die("can't open file");
 $stringData = "semaforo\n";
 fwrite($fh, $stringData);
 fclose($fh);
-set_time_limit(0); 
+
 //session_start();
-*/
+
 function cierre(){
     // Esta es nuestra función de cierre,
     // aquí podemos hacer las últimas operaciones
@@ -42,7 +42,7 @@ function getConnectionWithAccessToken($oauth_token, $oauth_token_secret) {
 }
  
 $connection = getConnectionWithAccessToken('1175525606-VqNgXi3qptL6wjt33Ewmy2LKJBnT0FyOyREMXeA', 'XQ3U44HTRfyBhNCwBSUnOFuxdrRkfSUULNz87W1w');
-$con=mysqli_connect("localhost","root","123","tictactuit");
+$con=mysqli_connect("localhost","cmuhpcac","ladegake","cmuhpcac_tictactuit");
 
 	$tcadena="https://api.twitter.com/1.1/application/rate_limit_status.json?resources=help,users,search,statuses";
 	

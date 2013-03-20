@@ -1,6 +1,5 @@
- <?php 
+﻿ <?php 
  
-
 class tuit
 { 
 	public $empresa = array() ; 	
@@ -37,7 +36,7 @@ function tuit_clave($clave,$provincia,$hastag)
 {
 $tuit = new tuit(); 	
 	//var_dump($clave);
-	$con=mysqli_connect("localhost","root","123","tictactuit");
+	$con=mysqli_connect("localhost","cmuhpcac","ladegake","cmuhpcac_tictactuit");
 	if (mysqli_connect_errno())  {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
