@@ -9,7 +9,7 @@
  
 require("twitteroauth.php");
 session_start();
-$clave=$_POST["clave"];
+/*$clave=$_POST["clave"];
 $usuario=$_POST["usuario"];
 $genero=$_POST["genero"];
 $edad=$_POST["edad"];
@@ -23,7 +23,7 @@ echo "y edad: ".$edad."<br><br><br><br><br><br>";
 foreach($_POST["pastime"] as $key=>$valor){
 	echo "Aficion:  ".$valor."<br>";
 }
-
+*/
 echo ini_get('max_execution_time');
 //var_dump($usuario);
 

@@ -15,7 +15,7 @@ if (file_exists($nombre_fichero)) {
 } else {
     echo "El fichero $nombre_fichero no existe";
 }
-*/
+
 
 $myFile = "semaforo.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
@@ -23,8 +23,8 @@ $stringData = "semaforo\n";
 fwrite($fh, $stringData);
 fclose($fh);
 set_time_limit(0); 
-session_start();
-
+//session_start();
+*/
 function cierre(){
     // Esta es nuestra función de cierre,
     // aquí podemos hacer las últimas operaciones
@@ -33,8 +33,8 @@ function cierre(){
 	unlink("semaforo.txt");
 }
 
-register_shutdown_function('cierre');
-
+//register_shutdown_function('cierre');
+//echo "Concectando a twitter";
 function getConnectionWithAccessToken($oauth_token, $oauth_token_secret) {
   set_time_limit(0); 
   $connection = new TwitterOAuth('Yh6iXPn1ooDTJerPOsCtVw', 'dhte9OirebxYBrDMzGm4rKQjT8ubuYXiorqrKeuUfE', $oauth_token, $oauth_token_secret);
@@ -42,22 +42,22 @@ function getConnectionWithAccessToken($oauth_token, $oauth_token_secret) {
 }
  
 $connection = getConnectionWithAccessToken('1175525606-VqNgXi3qptL6wjt33Ewmy2LKJBnT0FyOyREMXeA', 'XQ3U44HTRfyBhNCwBSUnOFuxdrRkfSUULNz87W1w');
-$con=mysqli_connect("localhost","root","123","twitter");
+$con=mysqli_connect("localhost","root","123","tictactuit");
 
 	$tcadena="https://api.twitter.com/1.1/application/rate_limit_status.json?resources=help,users,search,statuses";
-	echo "Concectando a twitter";
+	
 	$tcontent = $connection->get($tcadena);
-	var_dump($tcontent->resources);
+	//var_dump($tcontent->resources);
 
-//do{
-	//leegraba($con,$connection);
-//}while(true);
+do{
+	leegraba($con,$connection);
+}while(true);
 mysqli_close($con);
 
 
 function leegraba($con,$connection){
 	if (mysqli_connect_errno())  {
-		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		//echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
 	
 
@@ -65,11 +65,12 @@ $result = mysqli_query($con,"SELECT * FROM empresas");
 
 	while($row = mysqli_fetch_array($result)){
 		$nombre=$row['idtwitter'];
-		echo "<br>".$nombre. "<br>";
+	//	echo "<br>".$nombre. "<br>";
 		$cadena="statuses/user_timeline.json?include_entities=true&include_rts=false&screen_name=@".$nombre."&count=2300";
 		$content = $connection->get($cadena);
+		//var_dump($content);
 		for($i=0;$i<count($content);$i++) {  
-			$tmp0="INSERT INTO tuits(idtwitter,idstr,tuit,fecha,urlimagen) VALUES ('";			 
+			$tmp0="INSERT INTO tuits(idtwitter,idstr,tuit,fecha,urlimg) VALUES ('";			 
 			$tmp1=$content[$i]->user->screen_name;
 			$tmp2=$content[$i]->text; 
 			$tfecha=fecha($content[$i]->created_at);
@@ -80,9 +81,10 @@ $result = mysqli_query($con,"SELECT * FROM empresas");
 			$separa="','";
 			$tmp=$tmp0.$tmp1 .$separa .$tmp5.$separa. $tmp2 .$separa. $tfecha.$separa. $tmp4 . $final;
 			$result2=mysqli_query($con,$tmp);
+			//echo $tmp;
 	
 		}
-		sleep(40);
+		sleep(25);
 
 	}
 }
@@ -91,10 +93,16 @@ $result = mysqli_query($con,"SELECT * FROM empresas");
 
 
   function fecha($cadfecha) {
-	$ano="2013";
+	$ano=substr($cadfecha, 26, 4);
 	$cadmes=substr($cadfecha, 4, 3);
 	$dia=substr($cadfecha, 8, 2);
 	$mes="01";
+	$hor= substr($cadfecha, 11, 2);
+	$hor= intval(substr($cadfecha, 11, 2));
+	//echo ($cadfecha."->".$ano);
+	if ($hor<23) $hor++;
+	else $hor=0;
+	$hora=substr($cadfecha, 14, 5);
 	if ($cadmes=="Jan") $mes="01";
 	if ($cadmes=="Feb") $mes="02";	
 	if ($cadmes=="Mar") $mes="03";
@@ -107,7 +115,10 @@ $result = mysqli_query($con,"SELECT * FROM empresas");
 	if ($cadmes=="Oct") $mes="10";	
 	if ($cadmes=="Nov") $mes="11";
 	if ($cadmes=="Dec") $mes="12";
-	return $ano."-".$mes."-".$dia;
+	
+	return $ano."-".$mes."-".$dia." ".$hor.":".$hora;
+	
+	
  }
 
  ?> 

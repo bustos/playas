@@ -1,4 +1,5 @@
  <?php 
+ 
 
 class tuit
 { 
@@ -25,31 +26,35 @@ class tuit
     } 
      
 } 
- 
-$clave=$_GET["clave"];
-if (strlen($clave)>1) tuit_hastag($clave);
+$clave=$_GET["categoria"];
+$provincia=$_GET["provincia"];
+$hastag=$_GET["hastag"];
 
-function tuit_hastag($clave)
+tuit_clave($clave,$provincia,$hastag);
+
+
+function tuit_clave($clave,$provincia,$hastag)
 {
 $tuit = new tuit(); 	
-	$con=mysqli_connect("localhost","root","123","twitter");
+	//var_dump($clave);
+	$con=mysqli_connect("localhost","root","123","tictactuit");
 	if (mysqli_connect_errno())  {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
-	$tmp="SELECT idtwitter,nombre FROM empresas where categoria like '%".$clave."%' or subcategoria like '%".$clave."%'";
-	$result = mysqli_query($con,$tmp);
 	
-	while($row = mysqli_fetch_array($result)){
-		$nombre=$row['nombre'];
-	
-		$tmptuits="SELECT idtwitter,tuit,urlimagen,fecha FROM tuits where idtwitter like '%".$row['idtwitter']."%'";
-		
+		$tmptuits="SELECT tuits.idtwitter,tuit,urlimg,fecha,empresas.idtwitter,idprovincia as id,empresas.nombre as nomempresa FROM tuits,empresas where tuits.idtwitter=empresas.idtwitter";
+		if (strlen($clave)>0) $tmptuits.=" and (idcategoria=$clave)";
+		if (strlen($provincia)>0) $tmptuits.=" and idprovincia='$provincia'";
+		if (strlen($hastag)>1) $tmptuits.=" and tuit like '%$hastag%'";
+		$tmptuits.=" order by fecha desc";		
+		//var_dump($tmptuits);
 		$resultuits = mysqli_query($con,$tmptuits);
+//		var_dump($resultuits);
 		while($rowtuits = mysqli_fetch_array($resultuits)){
-			$tuit->carga($rowtuits['idtwitter'],$rowtuits['tuit'],$rowtuits['urlimagen'],$rowtuits['fecha'],$nombre);
+			$tuit->carga($rowtuits['id'],$rowtuits['tuit'],$rowtuits['urlimg'],$rowtuits['fecha'],$rowtuits['nomempresa']);
 		}
 
-	}
+	
 	
 	//var_dump($tuit);
 	echo json_encode($tuit);	
@@ -76,6 +81,5 @@ $tuit = new tuit();
 	if ($cadmes=="Dec") $mes="12";
 	return $dia."-".$mes."-".$ano;
  }
-
 
  ?>
