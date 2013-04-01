@@ -11,7 +11,7 @@ $nombre_fichero = 'semaforo.txt';
 
 if (file_exists($nombre_fichero)) {
     echo "El fichero $nombre_fichero existe";
-	exit();
+//	exit();
 } else {
     echo "El fichero $nombre_fichero no existe";
 }
@@ -47,11 +47,11 @@ $con=mysqli_connect("localhost","cmuhpcac","ladegake","cmuhpcac_tictactuit");
 	$tcadena="https://api.twitter.com/1.1/application/rate_limit_status.json?resources=help,users,search,statuses";
 	
 	$tcontent = $connection->get($tcadena);
-	//var_dump($tcontent->resources);
+	var_dump($tcontent->resources);
 
-do{
+/*do{
 	leegraba($con,$connection);
-}while(true);
+}while(true);*/
 mysqli_close($con);
 
 
