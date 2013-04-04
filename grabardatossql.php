@@ -1,98 +1,16 @@
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
- <head>
-  <title>PHP Test</title>
- </head>
- <body>
+
  <?php 
-
 require("twitteroauth.php");
-$nombre_fichero = 'semaforo.txt';
 
-if (file_exists($nombre_fichero)) {
-    echo "El fichero $nombre_fichero existe";
-//	exit();
-} else {
-    echo "El fichero $nombre_fichero no existe";
-}
-
-
-$myFile = "semaforo.txt";
-$fh = fopen($myFile, 'w') or die("can't open file");
-$stringData = "semaforo\n";
-fwrite($fh, $stringData);
-fclose($fh);
-
-//session_start();
-
-function cierre(){
-    // Esta es nuestra función de cierre,
-    // aquí podemos hacer las últimas operaciones
-    // antes de que el script sea completado.
-	echo "borrando semaforo";
-	unlink("semaforo.txt");
-}
-
-//register_shutdown_function('cierre');
-//echo "Concectando a twitter";
 function getConnectionWithAccessToken($oauth_token, $oauth_token_secret) {
-  set_time_limit(0); 
-  $connection = new TwitterOAuth('Yh6iXPn1ooDTJerPOsCtVw', 'dhte9OirebxYBrDMzGm4rKQjT8ubuYXiorqrKeuUfE', $oauth_token, $oauth_token_secret);
-  return $connection;
-}
- 
-$connection = getConnectionWithAccessToken('1175525606-VqNgXi3qptL6wjt33Ewmy2LKJBnT0FyOyREMXeA', 'XQ3U44HTRfyBhNCwBSUnOFuxdrRkfSUULNz87W1w');
-$con=mysqli_connect("localhost","cmuhpcac","ladegake","cmuhpcac_tictactuit");
-
-	$tcadena="https://api.twitter.com/1.1/application/rate_limit_status.json?resources=help,users,search,statuses";
-	
-	$tcontent = $connection->get($tcadena);
-	var_dump($tcontent->resources);
-
-/*do{
-	leegraba($con,$connection);
-}while(true);*/
-mysqli_close($con);
-
-
-function leegraba($con,$connection){
-	if (mysqli_connect_errno())  {
-		//echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	 
+	  $connection = new TwitterOAuth('Yh6iXPn1ooDTJerPOsCtVw', 'dhte9OirebxYBrDMzGm4rKQjT8ubuYXiorqrKeuUfE', $oauth_token, $oauth_token_secret);
+	  return $connection;
 	}
-	
-
-$result = mysqli_query($con,"SELECT * FROM empresas");
-
-	while($row = mysqli_fetch_array($result)){
-		$nombre=$row['idtwitter'];
-	//	echo "<br>".$nombre. "<br>";
-		$cadena="statuses/user_timeline.json?include_entities=true&include_rts=false&screen_name=@".$nombre."&count=2300";
-		$content = $connection->get($cadena);
-		//var_dump($content);
-		for($i=0;$i<count($content);$i++) {  
-			$tmp0="INSERT INTO tuits(idtwitter,idstr,tuit,fecha,urlimg) VALUES ('";			 
-			$tmp1=$content[$i]->user->screen_name;
-			$tmp2=$content[$i]->text; 
-			$tfecha=fecha($content[$i]->created_at);
-			$tmp4=$content[$i]->user->profile_image_url;	  
-			$tmp5=$content[$i]->id_str;
-			$tcero="0";
-			$final="')";
-			$separa="','";
-			$tmp=$tmp0.$tmp1 .$separa .$tmp5.$separa. $tmp2 .$separa. $tfecha.$separa. $tmp4 . $final;
-			$result2=mysqli_query($con,$tmp);
-			//echo $tmp;
-	
-		}
-		sleep(25);
-
+function cierre(){
+		unlink('semaforo.txt');
 	}
-}
-
-
-
-
-  function fecha($cadfecha) {
+function fecha($cadfecha) {
 	$ano=substr($cadfecha, 26, 4);
 	$cadmes=substr($cadfecha, 4, 3);
 	$dia=substr($cadfecha, 8, 2);
@@ -121,7 +39,64 @@ $result = mysqli_query($con,"SELECT * FROM empresas");
 	
  }
 
- ?> 
 
-</BODY>
-</HTML>
+$nombre_fichero = 'semaforo.txt';
+if (file_exists($nombre_fichero)) {
+	exit();
+} else {
+  //  echo "El fichero $nombre_fichero no existe";
+}
+	$myFile = "semaforo.txt";
+	$fh = fopen($myFile, 'w') or die("can't open file");
+	$stringData = "semaforo\n";
+	fwrite($fh, $stringData);
+	fclose($fh);
+	set_time_limit(0); 
+	session_start();
+	register_shutdown_function('cierre');
+	$connection = getConnectionWithAccessToken('1175525606-VqNgXi3qptL6wjt33Ewmy2LKJBnT0FyOyREMXeA', 'XQ3U44HTRfyBhNCwBSUnOFuxdrRkfSUULNz87W1w');
+	$con=mysqli_connect("localhost","root","123","tictactuit");
+	if (mysqli_connect_errno())  {
+		//echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+
+	$tcadena="https://api.twitter.com/1.1/application/rate_limit_status.json?resources=help,users,search,statuses";
+	$tcontent = $connection->get($tcadena);
+	var_dump($tcontent->resources);
+
+	//$result = mysqli_query($con,"SELECT idtwitter FROM empresas");
+	while($row = mysqli_fetch_array($result)){
+		$nombre=$row['idtwitter'];
+		$cadena="statuses/user_timeline.json?include_entities=true&include_rts=false&screen_name=@".$nombre."&count=2300";
+		$content = $connection->get($cadena);
+		echo count($content);
+		var_dump($content);
+		
+		if (count($content)>3)
+		for($i=0;$i<count($content);$i++) {  
+			$tmp1=$nombre;
+			echo "nombre: ".$nombre."<br>";
+			$tmp0="INSERT INTO tuits(idtwitter,idstr,tuit,fecha,urlimg) VALUES ('";			 
+			try{
+				$tmp2=$content[$i]->text; 
+				$tfecha=fecha($content[$i]->created_at);
+				$tmp4=$content[$i]->user->profile_image_url;	  
+				$tmp5=$content[$i]->id_str;
+				$tcero="0";
+				$final="')";
+				$separa="','";
+				$tmp=$tmp0.$tmp1 .$separa .$tmp5.$separa. $tmp2 .$separa. $tfecha.$separa. $tmp4 . $final;
+				$result2=mysqli_query($con,$tmp);
+			} catch (Exception $e) {
+				var_dump($content);
+				echo 'Caught exception: '.  $e->getMessage(). "\n";
+			}
+	
+		}
+		sleep(5);
+
+	}
+		mysqli_close($con);
+	unlink('semaforo.txt');
+
+ ?> 
