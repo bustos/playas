@@ -25,6 +25,7 @@ if ($result = $mysqli->query($tmp))
 		while ($row = $result->fetch_all()){	
 			foreach(($row) as $line){   
 			   foreach(($line) as $key ){
+				//var_dump($line);
 				$tmp=$finfo[$i]->name;
 					echo "<font size=\"5\"><b>$tmp:  </b></font>";
 					//echo  ."   -   ";
